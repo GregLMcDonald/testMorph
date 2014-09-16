@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5023" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5023"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TMFDocument">
             <connections>
+                <outlet property="FrameRate" destination="pKH-Ff-DNH" id="Ylu-Oc-IqU"/>
+                <outlet property="FrameRateValue" destination="3dF-oL-IV0" id="aiU-aL-siq"/>
+                <outlet property="Start" destination="Wa1-L8-LLA" id="bKt-YN-vT1"/>
+                <outlet property="frameView" destination="LnR-Kn-wlt" id="QDw-n4-D98"/>
                 <outlet property="window" destination="xOd-HO-29H" id="JIz-fz-R2o"/>
             </connections>
         </customObject>
@@ -14,26 +18,81 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="xOd-HO-29H" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="133" y="235" width="507" height="413"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
+            <rect key="contentRect" x="133" y="235" width="513" height="445"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <value key="minSize" type="size" width="94" height="86"/>
             <view key="contentView" id="gIp-Ho-8D9">
-                <rect key="frame" x="0.0" y="0.0" width="507" height="413"/>
+                <rect key="frame" x="0.0" y="0.0" width="513" height="445"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY">
-                        <rect key="frame" x="119" y="195" width="268" height="22"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Your document contents here" id="JDq-Ah-v2f">
-                            <font key="font" metaFont="system" size="18"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LnR-Kn-wlt" customClass="TMFFrameView">
+                        <rect key="frame" x="125" y="169" width="256" height="256"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </customView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wa1-L8-LLA">
+                        <rect key="frame" x="14" y="121" width="82" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="g3X-mN-Oxd"/>
+                        </constraints>
+                        <buttonCell key="cell" type="push" title="Animate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qIZ-Ad-048">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Izf-WP-KVp">
+                        <rect key="frame" x="14" y="88" width="82" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QNZ-Mp-BCg">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7D2-l0-SBC">
+                        <rect key="frame" x="14" y="55" width="82" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IZd-8F-Dnm">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <slider identifier="FrameRate" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pKH-Ff-DNH">
+                        <rect key="frame" x="169" y="128" width="298" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="eeL-iE-q2q"/>
+                        <connections>
+                            <action selector="setFrameRate:" target="-2" id="WgJ-Xh-AYn"/>
+                        </connections>
+                    </slider>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3dF-oL-IV0">
+                        <rect key="frame" x="171" y="100" width="96" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="96" id="8eH-lZ-lop"/>
+                        </constraints>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" placeholderString="50" bezelStyle="round" id="lki-8T-4rm">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="OG3-1c-Sd0"/>
-                    <constraint firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="s6i-b7-llN"/>
+                    <constraint firstItem="Izf-WP-KVp" firstAttribute="leading" secondItem="Wa1-L8-LLA" secondAttribute="leading" id="1jQ-s6-jao"/>
+                    <constraint firstItem="3dF-oL-IV0" firstAttribute="top" secondItem="pKH-Ff-DNH" secondAttribute="bottom" constant="8" symbolic="YES" id="2YA-mo-2FS"/>
+                    <constraint firstItem="Wa1-L8-LLA" firstAttribute="leading" secondItem="gIp-Ho-8D9" secondAttribute="leading" constant="20" symbolic="YES" id="3wy-fg-95z"/>
+                    <constraint firstItem="pKH-Ff-DNH" firstAttribute="centerY" secondItem="Wa1-L8-LLA" secondAttribute="centerY" id="5G6-Oy-jyc"/>
+                    <constraint firstItem="3dF-oL-IV0" firstAttribute="leading" secondItem="Izf-WP-KVp" secondAttribute="trailing" constant="81" id="5UQ-0B-b2k"/>
+                    <constraint firstItem="LnR-Kn-wlt" firstAttribute="top" secondItem="gIp-Ho-8D9" secondAttribute="top" constant="20" symbolic="YES" id="5cp-Ox-djc"/>
+                    <constraint firstItem="7D2-l0-SBC" firstAttribute="leading" secondItem="Izf-WP-KVp" secondAttribute="leading" id="DaR-kv-ezR"/>
+                    <constraint firstItem="pKH-Ff-DNH" firstAttribute="top" secondItem="LnR-Kn-wlt" secondAttribute="bottom" constant="22" id="PjY-aL-c9G"/>
+                    <constraint firstItem="LnR-Kn-wlt" firstAttribute="leading" secondItem="gIp-Ho-8D9" secondAttribute="leading" constant="125" id="Wnx-cK-uLa"/>
+                    <constraint firstAttribute="trailing" secondItem="pKH-Ff-DNH" secondAttribute="trailing" constant="48" id="gkV-so-c8C"/>
+                    <constraint firstAttribute="centerX" secondItem="LnR-Kn-wlt" secondAttribute="centerX" id="lyb-Bs-rkK"/>
+                    <constraint firstItem="Izf-WP-KVp" firstAttribute="top" secondItem="Wa1-L8-LLA" secondAttribute="bottom" constant="12" symbolic="YES" id="mxi-qe-KzU"/>
+                    <constraint firstAttribute="bottom" secondItem="LnR-Kn-wlt" secondAttribute="bottom" constant="169" id="o5h-Yw-ydV"/>
+                    <constraint firstItem="3dF-oL-IV0" firstAttribute="leading" secondItem="pKH-Ff-DNH" secondAttribute="leading" id="s9T-JT-Qqi"/>
+                    <constraint firstItem="7D2-l0-SBC" firstAttribute="top" secondItem="Izf-WP-KVp" secondAttribute="bottom" constant="12" symbolic="YES" id="tSm-cA-DTI"/>
                 </constraints>
             </view>
             <connections>

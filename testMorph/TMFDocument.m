@@ -7,6 +7,14 @@
 //
 
 #import "TMFDocument.h"
+#import "TMFFrameView.h"
+
+@interface TMFDocument ()
+@property (weak) IBOutlet TMFFrameView *frameView;
+@property (weak) IBOutlet NSButton *Start;
+@property (weak) IBOutlet NSTextField *FrameRateValue;
+
+@end
 
 @implementation TMFDocument
 
@@ -17,6 +25,17 @@
         // Add your subclass-specific initialization here.
     }
     return self;
+}
+- (IBAction)setFrameRate:(id)sender {
+    self.frameView.frameRate = [sender intValue];
+    [self.FrameRateValue setStringValue:[NSString stringWithFormat:@"%i",self.frameView.frameRate]];
+    [self updateDisplay];
+}
+
+- (void) updateDisplay{
+    [self.frameView setNeedsDisplay:YES];
+    
+       
 }
 
 - (NSString *)windowNibName

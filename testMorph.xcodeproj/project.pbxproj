@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8438349619C8AD4700297CC9 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A801B719C87A9300A51E57 /* AppKit.framework */; };
+		8438349819C8AE1D00297CC9 /* IMG_6280.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8438349719C8AE1D00297CC9 /* IMG_6280.jpg */; };
 		84A801B519C87A9300A51E57 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A801B419C87A9300A51E57 /* Cocoa.framework */; };
 		84A801BF19C87A9300A51E57 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84A801BD19C87A9300A51E57 /* InfoPlist.strings */; };
 		84A801C119C87A9300A51E57 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A801C019C87A9300A51E57 /* main.m */; };
@@ -19,6 +21,7 @@
 		84A801D819C87A9400A51E57 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A801B419C87A9300A51E57 /* Cocoa.framework */; };
 		84A801E019C87A9400A51E57 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84A801DE19C87A9400A51E57 /* InfoPlist.strings */; };
 		84A801E219C87A9400A51E57 /* testMorphTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A801E119C87A9400A51E57 /* testMorphTests.m */; };
+		84A801ED19C87CC800A51E57 /* TMFFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A801EC19C87CC800A51E57 /* TMFFrameView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8438349719C8AE1D00297CC9 /* IMG_6280.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_6280.jpg; sourceTree = "<group>"; };
 		84A801B119C87A9300A51E57 /* testMorph.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testMorph.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A801B419C87A9300A51E57 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		84A801B719C87A9300A51E57 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -52,6 +56,8 @@
 		84A801DD19C87A9400A51E57 /* testMorphTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "testMorphTests-Info.plist"; sourceTree = "<group>"; };
 		84A801DF19C87A9400A51E57 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		84A801E119C87A9400A51E57 /* testMorphTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testMorphTests.m; sourceTree = "<group>"; };
+		84A801EB19C87CC800A51E57 /* TMFFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMFFrameView.h; sourceTree = "<group>"; };
+		84A801EC19C87CC800A51E57 /* TMFFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMFFrameView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8438349619C8AD4700297CC9 /* AppKit.framework in Frameworks */,
 				84A801B519C87A9300A51E57 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +127,9 @@
 				84A801C619C87A9300A51E57 /* TMFDocument.h */,
 				84A801C719C87A9300A51E57 /* TMFDocument.m */,
 				84A801C919C87A9300A51E57 /* TMFDocument.xib */,
+				84A801EB19C87CC800A51E57 /* TMFFrameView.h */,
+				84A801EC19C87CC800A51E57 /* TMFFrameView.m */,
+				8438349719C8AE1D00297CC9 /* IMG_6280.jpg */,
 				84A801CC19C87A9300A51E57 /* MainMenu.xib */,
 				84A801CF19C87A9300A51E57 /* Images.xcassets */,
 				84A801BB19C87A9300A51E57 /* Supporting Files */,
@@ -239,6 +249,7 @@
 				84A801C519C87A9300A51E57 /* Credits.rtf in Resources */,
 				84A801CB19C87A9300A51E57 /* TMFDocument.xib in Resources */,
 				84A801CE19C87A9300A51E57 /* MainMenu.xib in Resources */,
+				8438349819C8AE1D00297CC9 /* IMG_6280.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +270,7 @@
 			files = (
 				84A801C819C87A9300A51E57 /* TMFDocument.m in Sources */,
 				84A801C119C87A9300A51E57 /* main.m in Sources */,
+				84A801ED19C87CC800A51E57 /* TMFFrameView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,6 +491,7 @@
 				84A801E719C87A9400A51E57 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		84A801E819C87A9400A51E57 /* Build configuration list for PBXNativeTarget "testMorphTests" */ = {
 			isa = XCConfigurationList;
@@ -487,6 +500,7 @@
 				84A801EA19C87A9400A51E57 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
