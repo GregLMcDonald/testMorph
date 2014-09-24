@@ -59,7 +59,7 @@
                     <slider identifier="FrameRate" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pKH-Ff-DNH">
                         <rect key="frame" x="169" y="128" width="298" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="eeL-iE-q2q"/>
+                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1000" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="eeL-iE-q2q"/>
                         <connections>
                             <action selector="setFrameRate:" target="-2" id="WgJ-Xh-AYn"/>
                         </connections>
