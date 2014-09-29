@@ -7,6 +7,7 @@
 //
 
 #import "TMFFrameView.h"
+#import <ImageIO/ImageIO.h>
 
 #define kNUMBER_OF_POINTS 8
 #define kLINE_WIDTH 1.0
@@ -16,7 +17,7 @@
 #define kFRAME_HEIGHT 256
 #define kFRAME_RATE 50
 
-#define kNUMBER_OF_FRAMES 400
+#define kNUMBER_OF_FRAMES 31
 
 #define kMAX_MVMT_OUT 1.0
 #define kMAX_MVMT_IN 0.5
@@ -38,6 +39,7 @@
         _iMayUseThis = YES;
         
         _frameRate = kFRAME_RATE;
+        _currentFrame = 0;
         
         _frames = [[NSMutableArray alloc] init];
         
@@ -94,68 +96,29 @@
     int evtNb = 0;
     
     
+   
     event[evtNb].point = 0;
     event[evtNb].startFrame = 0;
-    event[evtNb].duration = 50;
+    event[evtNb].duration = 15;
     event[evtNb].targetVal = 1.0;
-    
+   
+    evtNb += 1;
+    event[evtNb].point = 4;
+    event[evtNb].startFrame = 0;
+    event[evtNb].duration = 15;
+    event[evtNb].targetVal = 1.0;
+ 
     evtNb += 1;
     event[evtNb].point = 0;
     event[evtNb].startFrame = -1;
-    event[evtNb].duration = 50;
+    event[evtNb].duration = 15;
     event[evtNb].targetVal = 0.0;
     
     evtNb += 1;
-    event[evtNb].point = 0;
+    event[evtNb].point = 4;
     event[evtNb].startFrame = -1;
-    event[evtNb].duration = 50;
-    event[evtNb].targetVal = 0.5;
-    
-    evtNb += 1;
-    event[evtNb].point = 0;
-    event[evtNb].startFrame = -1;
-    event[evtNb].duration = 45;
+    event[evtNb].duration = 15;
     event[evtNb].targetVal = 0.0;
-    
-    
-    evtNb += 1;
-    event[evtNb].point = 3;
-    event[evtNb].startFrame = -1;
-    event[evtNb].duration = 100;
-    event[evtNb].targetVal = 0.2;
-    
-    evtNb += 1;
-    event[evtNb].point = 3;
-    event[evtNb].startFrame = -1;
-    event[evtNb].duration = 75;
-    event[evtNb].targetVal = 0.0;
-    
-    
-    evtNb += 1;
-    event[evtNb].point = 5;
-    event[evtNb].startFrame = -1;
-    event[evtNb].duration = 50;
-    event[evtNb].targetVal = 0.7;
-    
-    evtNb += 1;
-    event[evtNb].point = 5;
-    event[evtNb].startFrame = -1;
-    event[evtNb].duration = 100;
-    event[evtNb].targetVal = 0.0;
-
-    
-    evtNb += 1;
-    event[evtNb].point = 7;
-    event[evtNb].startFrame = -1;
-    event[evtNb].duration = 80;
-    event[evtNb].targetVal = 0.4;
-    
-    evtNb += 1;
-    event[evtNb].point = 7;
-    event[evtNb].startFrame = -1;
-    event[evtNb].duration = 50;
-    event[evtNb].targetVal = 0.0;
-    
     
     
     numberOfEvents = evtNb + 1;
@@ -238,12 +201,12 @@
     }
     
     
-    
+    /*
     for (int i = 0; i < kNUMBER_OF_FRAMES; i++){
         NSMutableArray *values = timeline[i];
         NSLog(@"%i:  %f  %f  %f  %f", i, [ values[0] floatValue], [ values[1] floatValue], [values[2] floatValue], [values[3] floatValue]);
     }
-    
+    */
     
     
     
@@ -283,6 +246,7 @@
         
         
         //Make points for reference circle (if we need it)
+        
         fixedPoints[0].p = NSMakePoint(kCIRCLE_RADIUS, 0.0);
         fixedPoints[0].c1 = NSMakePoint(kCIRCLE_RADIUS, kCIRCLE_RADIUS * 0.55228);
         fixedPoints[0].c2 = NSMakePoint(kCIRCLE_RADIUS, -1 * kCIRCLE_RADIUS * 0.55228);
@@ -308,17 +272,18 @@
             points[j].c2 = [aRotation transformPoint:points[0].c2];
         }
 
+        /*
         if (i > 200){
-            //rotate the set of points by 25 degrees
+            //rotate the set of points by 125 degrees
             for (int j=0; j<kNUMBER_OF_POINTS; j++){
                 NSAffineTransform *aRotation = [NSAffineTransform transform];
-                [aRotation rotateByDegrees:25.0];
+                [aRotation rotateByDegrees:125.0];
                 points[j].p = [aRotation transformPoint:points[j].p];
                 points[j].c1 = [aRotation transformPoint:points[j].c1];
                 points[j].c2 = [aRotation transformPoint:points[j].c2];
             }
         }
-        
+        */
         
         struct BezPoint framePoints[ kNUMBER_OF_POINTS ];
         
@@ -370,6 +335,7 @@
             framePoints[j].c1 = [translateToFrameCenter transformPoint:framePoints[j].c1];
             framePoints[j].c2 = [translateToFrameCenter transformPoint:framePoints[j].c2];
             
+            
             if (j<4){
             fixedPoints[j].p = [translateToFrameCenter transformPoint:fixedPoints[j].p];
             fixedPoints[j].c1 = [translateToFrameCenter transformPoint:fixedPoints[j].c1];
@@ -390,12 +356,13 @@
         [refPath closePath];
         
         //Draw reference circle into current frame
+        /*
         [[NSColor whiteColor] set];
         [refPath fill];
         [[NSColor blackColor] set];
         [refPath setLineWidth:1.0];
         [refPath stroke];
-
+*/
         
         
 
@@ -411,8 +378,9 @@
         [aPath closePath];
 
         //Draw animated shape into current frame
-        [[[NSColor whiteColor] highlightWithLevel:0.9] set];
-        [[NSColor colorWithRed:1.0 green:0 blue:0 alpha:0.3] set];
+        //[[[NSColor whiteColor] highlightWithLevel:0.9] set];
+        //[[NSColor colorWithRed:1.0 green:0 blue:0 alpha:0.3] set];
+        [[NSColor whiteColor] set];
         [aPath fill];
         
         [[NSColor blackColor] set];
@@ -421,6 +389,61 @@
         
         [image unlockFocus];
     }
+    
+    
+    //Write frames out to PNG files
+
+    NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSUserDomainMask, YES);
+    NSString *deskDir;
+    
+    deskDir = [dirPaths objectAtIndex:0];
+    
+    for (int i=0; i < [self.frames count]; i++){
+        
+        NSString *imageName = [NSString stringWithFormat:@"%@%04d%@", @"/temp_image/temp_", i, @".png"];
+        
+        NSString *imagePath = [[NSString alloc] initWithString:[deskDir stringByAppendingPathComponent: imageName]];
+        
+        CGImageRef cgRef = [ (NSImage *)self.frames[i] CGImageForProposedRect:NULL context:nil hints:nil ];
+        NSBitmapImageRep *newRep = [[NSBitmapImageRep alloc] initWithCGImage:cgRef ];
+        [newRep setSize:[(NSImage *)self.frames[i] size]];
+        NSData *pngData = [newRep representationUsingType:NSPNGFileType properties:nil];
+        [pngData writeToFile:imagePath atomically:YES];
+
+    }
+    
+    
+    
+    
+    
+    
+    /*
+    - (void) writeCGImage: (CGImageRef) image toURL: (NSURL*) url withType: (CFStringRef) imageType andOptions: (CFDictionaryRef) options
+    {
+        CGImageDestinationRef myImageDest = CGImageDestinationCreateWithURL((CFURLRef)url, imageType, 1, nil);
+        CGImageDestinationAddImage(myImageDest, image, options);
+        CGImageDestinationFinalize(myImageDest);
+        CFRelease(myImageDest);
+    }
+     
+     
+     + (void)saveImage:(NSImage *)image atPath:(NSString *)path {
+     
+     CGImageRef cgRef = [image CGImageForProposedRect:NULL
+     context:nil
+     hints:nil];
+     NSBitmapImageRep *newRep = [[NSBitmapImageRep alloc] initWithCGImage:cgRef];
+     [newRep setSize:[image size]];   // if you want the same resolution
+     NSData *pngData = [newRep representationUsingType:NSPNGFileType properties:nil];
+     [pngData writeToFile:path atomically:YES];
+     [newRep autorelease];
+     }
+     
+     
+     
+     
+    */
+    
 }
 
 
@@ -446,9 +469,17 @@
 
     [NSGraphicsContext setCurrentContext:aContext];
     
-    if (self.frameRate >= 0 && self.frameRate < [self.frames count]){
-    [(NSImage *)[self.frames objectAtIndex:self.frameRate] drawInRect:rect];
+    if (self.currentFrame >= 0 && self.currentFrame < [self.frames count]){
+    [(NSImage *)[self.frames objectAtIndex:self.currentFrame] drawInRect:rect];
     }
+    
+    
+    self.currentFrame++;
+    if (self.currentFrame >= [self.frames count]){
+        self.currentFrame = 0;
+    }
+    
+    
     /*
     if ( self.frameRate >= 50 ){
         

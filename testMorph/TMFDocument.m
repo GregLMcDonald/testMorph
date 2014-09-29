@@ -9,10 +9,19 @@
 #import "TMFDocument.h"
 #import "TMFFrameView.h"
 
+
+
 @interface TMFDocument ()
 @property (weak) IBOutlet TMFFrameView *frameView;
 @property (weak) IBOutlet NSButton *Start;
-@property (weak) IBOutlet NSTextField *FrameRateValue;
+@property (weak) IBOutlet NSTextFieldCell *frameRateLabel;
+
+
+@property (weak) NSNumber* framesPerSecond;
+@property BOOL runningAnimation;
+
+
+
 
 @end
 
@@ -23,20 +32,62 @@
     self = [super init];
     if (self) {
         // Add your subclass-specific initialization here.
+        
+        _framesPerSecond = [NSNumber numberWithInt:30];
+        _runningAnimation = NO;
+
     }
     return self;
 }
+
 - (IBAction)setFrameRate:(id)sender {
-    self.frameView.frameRate = [sender intValue];
-    [self.FrameRateValue setStringValue:[NSString stringWithFormat:@"%i",self.frameView.frameRate]];
-    [self updateDisplay];
+    
+    //Slider for frame rate changed
+    //  update label
+    //  adjust timer
+    
+    self.framesPerSecond = [NSNumber numberWithInt:[sender intValue]];
+    [self.frameRateLabel setStringValue:[NSString stringWithFormat:@"%i",[sender intValue]]];
+    if (self.runningAnimation){
+        [self.animationTimer invalidate];
+        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0 / [self.framesPerSecond floatValue])
+                                                               target:self
+                                                             selector:@selector(updateDisplay)
+                                                             userInfo:nil
+                                                              repeats:YES];
+    }
+}
+
+
+
+
+
+
+
+- (IBAction)play:(id)sender{
+    if (self.runningAnimation != YES){
+    self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0 / [self.framesPerSecond floatValue])
+                                             target:self
+                                           selector:@selector(updateDisplay)
+                                           userInfo:nil
+                                            repeats:YES];
+        self.runningAnimation = YES;
+    }
+}
+
+
+
+
+- (IBAction)stop:(id)sender{
+    [self.animationTimer invalidate];
+    self.runningAnimation = NO;
+    
 }
 
 - (void) updateDisplay{
-    [self.frameView setNeedsDisplay:YES];
-    
-       
+       [self.frameView setNeedsDisplay:YES];
 }
+
 
 - (NSString *)windowNibName
 {

@@ -11,7 +11,9 @@
 @interface TMFFrameView : NSView
 
 @property int frameRate;
+@property int currentFrame;
 @property NSMutableArray* frames;
+
 
 
 

@@ -10,4 +10,7 @@
 
 @interface TMFDocument : NSDocument
 
+@property NSTimer *animationTimer;
+
+
 @end
