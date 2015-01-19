@@ -11,6 +11,7 @@
 @interface TMFDocument : NSDocument
 
 @property NSTimer *animationTimer;
+@property BOOL stopAnimation;
 
 
 @end

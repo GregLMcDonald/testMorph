@@ -35,7 +35,7 @@
         
         _framesPerSecond = [NSNumber numberWithInt:30];
         _runningAnimation = NO;
-
+       
     }
     return self;
 }
@@ -72,6 +72,7 @@
                                            userInfo:nil
                                             repeats:YES];
         self.runningAnimation = YES;
+        self.frameView.stopAnimation = NO;
     }
 }
 
@@ -85,7 +86,14 @@
 }
 
 - (void) updateDisplay{
+    
+    if (self.frameView.stopAnimation == NO) {
+
        [self.frameView setNeedsDisplay:YES];
+    }else{
+        [self.animationTimer invalidate];
+        self.runningAnimation = NO;
+    }
 }
 
 

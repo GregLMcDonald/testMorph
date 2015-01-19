@@ -10,10 +10,10 @@
 
 @interface TMFFrameView : NSView
 
-@property int frameRate;
+//@property int frameRate;
 @property int currentFrame;
 @property NSMutableArray* frames;
-
+@property BOOL stopAnimation;
 
 
 
