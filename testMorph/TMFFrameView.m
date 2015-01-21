@@ -9,20 +9,21 @@
 #import "TMFFrameView.h"
 #import <ImageIO/ImageIO.h>
 
-#define kNUMBER_OF_POINTS 5
+#define kNUMBER_OF_POINTS 3
 
-#define kGeyserWidth 60.0
-#define kGeyserDip 5.0
-#define kGeyserRestingRise 15.0
-#define kGeyserRestingPore 5.0 //pore width
-#define kGeyserOpenPore 40.0 //pore width when ball about to pop out
-#define kGeyserOpenHeight 30.0
+#define kScale 2.0
+#define kLineWidth 0.5
+
+#define kBaseWidth 5*kScale
+#define kMaxHeight 60*kScale
 
 
-#define kFRAME_WIDTH 128
-#define kFRAME_HEIGHT 128
 
-#define kNUMBER_OF_FRAMES 16
+
+#define kFRAME_WIDTH (kBaseWidth + 4)
+#define kFRAME_HEIGHT (kMaxHeight + 4)
+
+#define kNUMBER_OF_FRAMES 30
 
 
 
@@ -74,50 +75,31 @@
         [self.frames addObject:image];
         [image lockFocus];
         
+        double frameFactor = (double)i/(kNUMBER_OF_FRAMES-1);
         
         //Make the set of points for this frame
         
-        int a = 15;
-        int b = 5;
        
-        //control point c1 is closer to next point
+        
+        //c1 points at next point
+        //c2 points back to previous point
         
         
         //leftmost
-        points[0].p = NSMakePoint(- kGeyserWidth/2.0, 0);
-       // points[0].c2= NSMakePoint(- kGeyserWidth/2.0 + a, kGeyserRestingRise); //toward left of pore
-        
-        double p0_c2_offset = 15 - i * 10.0 / (kNUMBER_OF_FRAMES - 1);
-        points[0].c2 = NSMakePoint(-kGeyserWidth/2.0 + p0_c2_offset, kGeyserRestingRise);
-        points[0].c1 = NSMakePoint(- kGeyserWidth/2.0 + a, -kGeyserDip); //toward bottom
+        points[0].p = NSMakePoint(-kBaseWidth/2.0,0);
+        points[0].c2 = NSMakePoint(kBaseWidth,0);
+        points[0].c1 = NSMakePoint(0,kBaseWidth); //toward uppermost
     
-        //bottommost
-        points[1].p = NSMakePoint(0, -kGeyserDip);
-        points[1].c2 = NSMakePoint(-b, -kGeyserDip);
-        points[1].c1 = NSMakePoint(+b, -kGeyserDip);
-        
+        //uppermost
+        double y = frameFactor * kMaxHeight;
+        points[1].p = NSMakePoint(0, y);
+        points[1].c2 = NSMakePoint(0, y - kBaseWidth);
+        points[1].c1 = NSMakePoint(0, y - kBaseWidth);
         
         //rightmost
-        points[2].p = NSMakePoint(kGeyserWidth/2.0, 0);
-        points[2].c2 = NSMakePoint(kGeyserWidth/2.0 - a, -kGeyserDip);
-        points[2].c1 = NSMakePoint(kGeyserWidth/2.0 - p0_c2_offset, kGeyserRestingRise); //toward right of pore
-        
-        //right of pore
-        
-        double p3_y = kGeyserRestingRise + i * (kGeyserOpenHeight - kGeyserRestingRise)/(kNUMBER_OF_FRAMES -1);
-        double p3_x = kGeyserRestingPore/2.0 + i * 0.5 * (kGeyserOpenPore - kGeyserRestingPore)/(kNUMBER_OF_FRAMES-1);
-        
-        points[3].p = NSMakePoint(p3_x,p3_y);
-      //  points[3].c2 = NSMakePoint(kGeyserRestingPore/2.0 + b, kGeyserRestingRise); //close to rightmost
-        points[3].c2 = NSMakePoint(p3_x, kGeyserRestingRise);
-        points[3].c1 = NSMakePoint(0, 0.9*p3_y); //closer to left of pore point
-        
-        //left of pore
-       
-        points[4].p = NSMakePoint(-p3_x, p3_y);
-        points[4].c2= NSMakePoint(0, 0.9*p3_y); //closer to right of pore point
-      //  points[4].c1= NSMakePoint(-kGeyserRestingPore/2.0 - b, kGeyserRestingRise); //close to leftmost
-        points[4].c1 = NSMakePoint(-p3_x, kGeyserRestingRise);
+        points[2].p = NSMakePoint(kBaseWidth/2.0, 0);
+        points[2].c2 = NSMakePoint(0, kBaseWidth ); //toward uppermost
+        points[2].c1 = NSMakePoint(-kBaseWidth, 0);
         
         
         //Translate all points to frame center
