@@ -12,10 +12,10 @@
 #define kNUMBER_OF_POINTS 3
 
 #define kScale 2.0
-#define kLineWidth 0.5
+#define kLineWidth 1
 
-#define kBaseWidth 5*kScale
-#define kMaxHeight 60*kScale
+#define kBaseWidth 3*kScale
+#define kMaxHeight 100*kScale
 
 
 
@@ -65,10 +65,6 @@
     
     struct BezPoint points[ kNUMBER_OF_POINTS ];
     
-    
-    
-    
-    //Another way is to draw the frames using paths
     for (int i=0; i<kNUMBER_OF_FRAMES; i++){
  
         NSImage* image = [[NSImage alloc] initWithSize:NSMakeSize(kFRAME_WIDTH, kFRAME_HEIGHT)];
@@ -85,21 +81,21 @@
         //c2 points back to previous point
         
         
-        //leftmost
-        points[0].p = NSMakePoint(-kBaseWidth/2.0,0);
-        points[0].c2 = NSMakePoint(kBaseWidth,0);
-        points[0].c1 = NSMakePoint(0,kBaseWidth); //toward uppermost
-    
         //uppermost
         double y = frameFactor * kMaxHeight;
         points[1].p = NSMakePoint(0, y);
-        points[1].c2 = NSMakePoint(0, y - kBaseWidth);
-        points[1].c1 = NSMakePoint(0, y - kBaseWidth);
+        points[1].c2 = NSMakePoint(0, 0.8*y);
+        points[1].c1 = NSMakePoint(0, 0.8*y);
         
+        //leftmost
+        points[0].p = NSMakePoint(-kBaseWidth/2.0,0);
+        points[0].c2 = NSMakePoint(0,0);
+        points[0].c1 = NSMakePoint(0,0.2*y); //toward uppermost
+    
         //rightmost
         points[2].p = NSMakePoint(kBaseWidth/2.0, 0);
-        points[2].c2 = NSMakePoint(0, kBaseWidth ); //toward uppermost
-        points[2].c1 = NSMakePoint(-kBaseWidth, 0);
+        points[2].c2 = NSMakePoint(0, 0.2*y ); //toward uppermost
+        points[2].c1 = NSMakePoint(0, 0);
         
         
         //Translate all points to frame center
@@ -129,7 +125,7 @@
         [aPath fill];
         
         [[NSColor blackColor] set];
-        [aPath setLineWidth:.5];
+        [aPath setLineWidth:kLineWidth];
         [aPath stroke];
         
         [image unlockFocus];
@@ -145,7 +141,7 @@
     
     for (int i=0; i < [self.frames count]; i++){
         
-        NSString *imageName = [NSString stringWithFormat:@"%@%04d%@", @"/temp_image/temp_", i, @".png"];
+        NSString *imageName = [NSString stringWithFormat:@"%@%04d%@", @"/temp_image/ballStarPoint", i, @"@2x.png"];
         
         NSString *imagePath = [[NSString alloc] initWithString:[deskDir stringByAppendingPathComponent: imageName]];
         
@@ -206,7 +202,9 @@
     
     
     if (self.currentFrame >= 0 && self.currentFrame < [self.frames count]){
-    [(NSImage *)[self.frames objectAtIndex:self.currentFrame] drawInRect:rect];
+        NSImage* im = [self.frames objectAtIndex:self.currentFrame];
+        CGRect imRect = CGRectMake(0, 0, im.size.width, im.size.height);
+        [(NSImage *)[self.frames objectAtIndex:self.currentFrame] drawInRect:imRect];
     }
     
     
