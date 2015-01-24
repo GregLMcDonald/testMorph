@@ -14,16 +14,15 @@
 #define kScale 2.0
 #define kLineWidth 1
 
-#define kBaseWidth 3*kScale
-#define kMaxHeight 100*kScale
+#define kDiameter 30*kScale
+#define kOffset 2*kScale
 
 
 
+#define kFRAME_WIDTH (kDiameter + 2*kOffset)
+#define kFRAME_HEIGHT kFRAME_WIDTH
 
-#define kFRAME_WIDTH (kBaseWidth + 4)
-#define kFRAME_HEIGHT (kMaxHeight + 4)
-
-#define kNUMBER_OF_FRAMES 30
+#define kNUMBER_OF_FRAMES 1
 
 
 
@@ -51,19 +50,7 @@
     
 - (void)createFrames{
     
-    
-    float x_offset = kFRAME_WIDTH / 2.0;
-    float y_offset = kFRAME_HEIGHT / 2.0;
-    
-    
-    struct BezPoint {
-        NSPoint p;
-        NSPoint c1;
-        NSPoint c2;
-    };
-    
-    
-    struct BezPoint points[ kNUMBER_OF_POINTS ];
+
     
     for (int i=0; i<kNUMBER_OF_FRAMES; i++){
  
@@ -71,62 +58,26 @@
         [self.frames addObject:image];
         [image lockFocus];
         
-        double frameFactor = (double)i/(kNUMBER_OF_FRAMES-1);
-        
-        //Make the set of points for this frame
-        
-       
-        
-        //c1 points at next point
-        //c2 points back to previous point
-        
-        
-        //uppermost
-        double y = frameFactor * kMaxHeight;
-        points[1].p = NSMakePoint(0, y);
-        points[1].c2 = NSMakePoint(0, 0.8*y);
-        points[1].c1 = NSMakePoint(0, 0.8*y);
-        
-        //leftmost
-        points[0].p = NSMakePoint(-kBaseWidth/2.0,0);
-        points[0].c2 = NSMakePoint(0,0);
-        points[0].c1 = NSMakePoint(0,0.2*y); //toward uppermost
-    
-        //rightmost
-        points[2].p = NSMakePoint(kBaseWidth/2.0, 0);
-        points[2].c2 = NSMakePoint(0, 0.2*y ); //toward uppermost
-        points[2].c1 = NSMakePoint(0, 0);
-        
-        
-        //Translate all points to frame center
-        NSAffineTransform *translateToFrameCenter = [NSAffineTransform transform];
-        [translateToFrameCenter translateXBy:x_offset yBy:y_offset];
-        for (int j = 0 ; j < kNUMBER_OF_POINTS; j++){
-            points[j].p = [translateToFrameCenter transformPoint:points[j].p];
-            points[j].c1 = [translateToFrameCenter transformPoint:points[j].c1];
-            points[j].c2 = [translateToFrameCenter transformPoint:points[j].c2];
-        }
-        
-        
-
-        //Build path of animated shape
-        NSBezierPath *aPath = [[NSBezierPath alloc] init];
-        [aPath moveToPoint:points[0].p];
-        for (int j=1; j<kNUMBER_OF_POINTS; j++){
-            [aPath curveToPoint:points[j].p
-                  controlPoint1:points[j-1].c1
-                  controlPoint2:points[j].c2];
-        }
-        [aPath curveToPoint:points[0].p controlPoint1:points[kNUMBER_OF_POINTS-1].c1 controlPoint2:points[0].c2];
-        [aPath closePath];
-
-        //Draw animated shape into current frame
+     
+        NSBezierPath *aPath = [NSBezierPath bezierPathWithOvalInRect:NSRectFromCGRect(CGRectMake(kOffset, kOffset, kDiameter, kDiameter))];
         [[NSColor whiteColor] set];
         [aPath fill];
         
         [[NSColor blackColor] set];
         [aPath setLineWidth:kLineWidth];
         [aPath stroke];
+        
+        
+        aPath = [NSBezierPath bezierPathWithOvalInRect:NSRectFromCGRect(CGRectMake(kDiameter/2.0, kDiameter/4.0, kDiameter/2.0, kDiameter/2.0))];
+        [[NSColor blackColor] set];
+        [aPath fill];
+        
+        [[NSColor blackColor] set];
+        [aPath setLineWidth:kLineWidth];
+        [aPath stroke];
+        
+        
+        
         
         [image unlockFocus];
     }
@@ -141,7 +92,9 @@
     
     for (int i=0; i < [self.frames count]; i++){
         
-        NSString *imageName = [NSString stringWithFormat:@"%@%04d%@", @"/temp_image/ballStarPoint", i, @"@2x.png"];
+//        NSString *imageName = [NSString stringWithFormat:@"%@%04d%@", @"/temp_image/eye100@2x.png", i, @"@2x.png"];
+        
+        NSString *imageName = @"/temp_image/eye30@2x.png";
         
         NSString *imagePath = [[NSString alloc] initWithString:[deskDir stringByAppendingPathComponent: imageName]];
         
