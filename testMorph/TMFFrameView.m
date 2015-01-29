@@ -11,18 +11,18 @@
 
 #define kNUMBER_OF_POINTS 3
 
-#define kScale 1.0
+#define kScale 2.0
 #define kLineWidth 1
 
-#define kDiameter 30*kScale
-#define kOffset 2*kScale
+#define kDiameter (150*kScale)
+#define kOffset (2*kScale)
 
 
 
 #define kFRAME_WIDTH (kDiameter + 2*kOffset)
 #define kFRAME_HEIGHT kFRAME_WIDTH
 
-#define kNUMBER_OF_FRAMES 10
+#define kNUMBER_OF_FRAMES 60
 
 
 
@@ -60,27 +60,48 @@
         
         double frameFactor = (double)i/(kNUMBER_OF_FRAMES - 1);
         
-        
+        //Draw a circle
         NSBezierPath *aPath = [NSBezierPath bezierPathWithOvalInRect:NSRectFromCGRect(CGRectMake(kOffset, kOffset, kDiameter, kDiameter))];
         
+        NSPoint midPoint = NSPointFromCGPoint(CGPointMake(kFRAME_WIDTH/2.0, kFRAME_HEIGHT/2.0));
+        NSPoint upPoint = NSPointFromCGPoint(CGPointMake(kFRAME_WIDTH/2.0, kFRAME_HEIGHT));
         
-        [NSBezierPath clipRect:NSRectFromCGRect(CGRectMake(0, (1-frameFactor)*kDiameter, 2*kDiameter, 2*kDiameter))];
-        [aPath addClip];
+        double dist = 1.1*(kDiameter + kOffset);
+        
+        double theta = 90 - (frameFactor * 359);
+        NSPoint anglePoint = NSPointFromCGPoint(CGPointMake(midPoint.x + dist*cos(theta), midPoint.y + dist*sin(theta)));
+        
+        NSBezierPath *clippingPath = [NSBezierPath new];
+        [clippingPath moveToPoint:midPoint];
+        [clippingPath lineToPoint:upPoint];
+        [clippingPath appendBezierPathWithArcWithCenter:midPoint radius:dist startAngle:90 endAngle:theta clockwise:YES];
+        [clippingPath lineToPoint:midPoint];
+        
+        [clippingPath addClip];
+        
+        
+        //Clip out wedge
+        
+        
+   //     [NSBezierPath clipRect:NSRectFromCGRect(CGRectMake(0, (1-frameFactor)*kDiameter, 2*kDiameter, 2*kDiameter))];
+     //   [aPath addClip];
         
         [[NSColor whiteColor] set];
         [aPath fill];
-        
+        /*
+         
         [[NSColor blackColor] set];
         [aPath setLineWidth:kLineWidth];
         [aPath stroke];
+        */
         
-        
+        /*
         NSBezierPath* line = [NSBezierPath bezierPath];
         [line moveToPoint:NSPointFromCGPoint(CGPointMake(0, (1-frameFactor)*kDiameter))];
         [line lineToPoint:NSPointFromCGPoint(CGPointMake(2*kDiameter,  (1-frameFactor)*kDiameter))];
         [line setLineWidth:kLineWidth];
         [line stroke];
-        
+        */
         
         
          
@@ -110,9 +131,9 @@
     
     for (int i=0; i < [self.frames count]; i++){
         
-      NSString *imageName = [NSString stringWithFormat:@"%@%04d%@", @"/temp_image/blink30_", i, @"@1x.png"];
+     NSString *imageName = [NSString stringWithFormat:@"%@%04d%@", @"/temp_image/timer150_", i, @"@2x.png"];
         
-//        NSString *imageName = @"/temp_image/eyePupil15@2x.png";
+///       NSString *imageName = @"/temp_image/ball60@1x.png";
         
         NSString *imagePath = [[NSString alloc] initWithString:[deskDir stringByAppendingPathComponent: imageName]];
         
